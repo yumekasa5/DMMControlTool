@@ -23,7 +23,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_Open_clicked()
 {
-    bool ret = false;
     QString ipaddress = "127.0.0.1";
     quint16 port = 8080;
     QString message = QString("Connect to server...[%1 : %2]").arg(ipaddress).arg(port);
