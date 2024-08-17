@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "DMMControl.h"
+#include "SCPICommandDefine.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
@@ -10,6 +11,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     connect(this, &MainWindow::newMessage, this, &MainWindow::displayMessage);
+    ui->comboBox->addItem(IDENTIFY_DEVICE);
+    ui->comboBox->addItem(RESET_DEVICE);
 
     mCtrl->start();
 }
@@ -47,7 +50,8 @@ void MainWindow::on_pushButton_SendCmd_clicked()
 {
   bool ret = false;
   //! コマンドの送信
-  QString cmd = ui->lineEdit_Command->text();
+//  QString cmd = ui->lineEdit_Command->text();
+  QString cmd = ui->comboBox->currentText();
   QString message = QString("-> %1").arg(cmd);
   emit newMessage(message);
   ret = mCtrl->GetInstance()->SendCommand(cmd);
