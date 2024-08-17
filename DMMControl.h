@@ -15,8 +15,6 @@ public:
     void run() override;
     DMMComControl* GetInstance();
 
-signals:
-
 private:
     DMMComControl *mCtrl;
 

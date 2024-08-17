@@ -42,3 +42,20 @@ void MainWindow::displayMessage(const QString& msg)
   ui->textBrowser_Log->append(msg);
 }
 
+
+void MainWindow::on_pushButton_SendCmd_clicked()
+{
+  bool ret = false;
+  //! コマンドの送信
+  QString cmd = ui->lineEdit_Command->text();
+  QString message = QString("-> %1").arg(cmd);
+  emit newMessage(message);
+  ret = mCtrl->GetInstance()->SendCommand(cmd);
+  if(ret){
+      ui->lineEdit_Command->clear();
+  }else{
+      QMessageBox::critical(this, "Send Command", "Failed to send command to server.");
+      emit newMessage("Failed to send command");
+  }
+}
+

@@ -17,6 +17,7 @@ SOURCES += \
 HEADERS += \
 	DMMComControl.h \
 	DMMControl.h \
+	SCPICommandDefine.h \
 	mainwindow.h
 
 FORMS += \

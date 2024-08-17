@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QDebug>
+#include <QMessageBox>
 
 class DMMControl;
 
@@ -26,6 +27,8 @@ private slots:
     void on_pushButton_Close_clicked();
 
     void displayMessage(const QString& msg);
+
+    void on_pushButton_SendCmd_clicked();
 
 private:
     Ui::MainWindow *ui;

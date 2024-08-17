@@ -20,13 +20,22 @@ public:
     void Close();
     bool CheckIsOpened();
 
-    bool ReadSocket();
+    bool SendCommand(const QString &data) const;
+
+    //! コマンド
+    bool GetDeviceInfoCmd(QString &info);
+
     bool DiscardSocket();
+
+private slots:
+    void ReadSocket();
 
 private:
     bool mIsOpened;
     QMutex mMutexIsOpened;
     QMutex mMutexConnect;
+
+    QString mReceiveData;
 
     //! TCPクライアントオブジェクト
     QTcpSocket *mTcpClientSocket;
