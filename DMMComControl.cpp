@@ -103,17 +103,19 @@ void DMMComControl::ReadSocket()
 {
     QByteArray buffer;
 
-    QDataStream socketStream(mTcpClientSocket);
-    socketStream.setVersion(QDataStream::Qt_5_15);
+//    QDataStream socketStream(mTcpClientSocket);
+//    socketStream.setVersion(QDataStream::Qt_5_15);
 
-    socketStream.startTransaction();
-    socketStream >> buffer;
+//    socketStream.startTransaction();
+//    socketStream >> buffer;
 
-    QString header = buffer.mid(0, 128);
-    QString fileType = header.split(",")[0].split(":")[1];
+//    QString header = buffer.mid(0, 128);
+//    QString fileType = header.split(",")[0].split(":")[1];
 
-    buffer = buffer.mid(128);  // bufferの位置128以降のデータを読み出す
-    qDebug() << buffer;
+//    buffer = buffer.mid(128);  // bufferの位置128以降のデータを読み出す
+
+    buffer = mTcpClientSocket->readAll();
+    qDebug() << "Received data:" << buffer;
     mReceiveData = buffer;
 }
 
