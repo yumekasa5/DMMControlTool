@@ -13,6 +13,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this, &MainWindow::newMessage, this, &MainWindow::displayMessage);
     ui->comboBox->addItem(IDENTIFY_DEVICE);
     ui->comboBox->addItem(RESET_DEVICE);
+    ui->comboBox->addItem(SENSING);
+    ui->comboBox->addItem(VOLT);
+
+    ui->lineEdit_IpAddress->setText("127.0.0.1");
+    ui->lineEdit_Port->setText("5025");
 
     mCtrl->start();
 }
@@ -26,8 +31,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_Open_clicked()
 {
-    QString ipaddress = "127.0.0.1";
-    quint16 port = 8080;
+    QString ipaddress = ui->lineEdit_IpAddress->text();
+    quint16 port = ui->lineEdit_Port->text().toUShort();
     QString message = QString("Connect to server...[%1 : %2]").arg(ipaddress).arg(port);
     emit newMessage(message);
     mCtrl->GetInstance()->Open(ipaddress, port);
