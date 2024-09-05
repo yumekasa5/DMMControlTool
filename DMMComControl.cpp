@@ -72,15 +72,11 @@ bool DMMComControl::SendCommand(const QString &data) const
     if(!mIsOpened){
         return false;
     }else{
-        QByteArray byte_data = data.toLocal8Bit();
+        const QString send_data {data + "\n"};
+        QByteArray byte_data = send_data.toLocal8Bit();
 
         QDataStream socketStream(mTcpClientSocket);
         socketStream.setVersion(QDataStream::Qt_5_15);
-
-        QByteArray header;
-        header.prepend(QString("fileType:message,fileName:null,fileSize:%1;").arg(data.size()).toUtf8());
-        header.resize(128);
-        byte_data.prepend(header);  // header(128byte) + dataの形にする
 
         //! 送信処理
         socketStream << byte_data;
@@ -102,17 +98,6 @@ bool DMMComControl::GetDeviceInfoCmd(QString &info)
 void DMMComControl::ReadSocket()
 {
     QByteArray buffer;
-
-//    QDataStream socketStream(mTcpClientSocket);
-//    socketStream.setVersion(QDataStream::Qt_5_15);
-
-//    socketStream.startTransaction();
-//    socketStream >> buffer;
-
-//    QString header = buffer.mid(0, 128);
-//    QString fileType = header.split(",")[0].split(":")[1];
-
-//    buffer = buffer.mid(128);  // bufferの位置128以降のデータを読み出す
 
     buffer = mTcpClientSocket->readAll();
     qDebug() << "Received data:" << buffer;
