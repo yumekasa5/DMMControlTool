@@ -5,6 +5,7 @@ DMMControl::DMMControl(QObject *parent)
     : QThread{parent},
     mCtrl(new DMMComControl(this))
 {
+    qDebug() << "[DMMComControl]:" << QThread::currentThread();
 
 }
 

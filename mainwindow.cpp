@@ -16,10 +16,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui->comboBox->addItem(SENSING);
     ui->comboBox->addItem(VOLT);
 
-    ui->lineEdit_IpAddress->setText("127.0.0.1");
-    ui->lineEdit_Port->setText("5025");
+    ui->lineEdit_IpAddress->setText("192.168.100.13"); // デフォルト:192.168.100.13
+    ui->lineEdit_Port->setText("5025");                // デフォルト:5025
 
     mCtrl->start();
+    qDebug() << "[DMMControl]:"  << mCtrl->currentThread();
+    qDebug() << "[GUI]" << QThread::currentThread();
 }
 
 MainWindow::~MainWindow()
@@ -35,6 +37,8 @@ void MainWindow::on_pushButton_Open_clicked()
     quint16 port = ui->lineEdit_Port->text().toUShort();
     QString message = QString("Connect to server...[%1 : %2]").arg(ipaddress).arg(port);
     emit newMessage(message);
+
+    // 別スレッドで非同期でOpen処理を行うようにしたい
     mCtrl->GetInstance()->Open(ipaddress, port);
 }
 
